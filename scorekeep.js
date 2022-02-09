@@ -44,13 +44,15 @@ p2.Button.addEventListener('click', function (e) {
 reset.addEventListener('click', reload)
 
 function reload() {
-    p1 = 0;
-    p2.score = 0;
-    p1.Display.innerText = 0;
-    p2.Display.innerText = 0;
+    for (let p of [p1, p2]) {
+        p.score = 0;
+        p.Display.innerText = 0;
+        p.Display.classList.remove('has-text-success', 'has-text-danger');
+        p.Button.disabled = false;
+    }
+
     isGameOver = false;
-    p1.Display.classList.remove('has-text-success', 'has-text-danger');
-    p2.Display.classList.remove('has-text-success', 'has-text-danger');
-    p1.Button.disabled = false;
-    p2.Button.disabled = false;
+
+
+
 }
