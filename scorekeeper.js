@@ -9,7 +9,7 @@ let p2Button = document.querySelector('#p2Button');
 let reset = document.querySelector('#reset');
 let maxPoints = document.querySelector('#maxPoints');
 maxPoints.addEventListener('change', (e) => {
-    winningScore = parseInt(this.value);
+    winningScore = parseInt(maxPoints.value);
     reload();
 })
 let isGameOver = false;
@@ -37,10 +37,7 @@ p2Button.addEventListener('click', function () {
     }
 })
 
-reset.addEventListener('click', (e) => {
-    reload();
-    maxPoints.value = '3';
-})
+reset.addEventListener('click', reload)
 
 function reload() {
     p1 = 0;
