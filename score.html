@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .winner {
+            color: green;
+        }
+
+        .loser {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half is-offset-one-quarter">
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image is-2by1">
+                                <img src="https://images.unsplash.com/photo-1534158914592-062992fbe900?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=3784&amp;q=80"
+                                    alt="">
+                            </figure>
+                        </div>
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                PingPong ScoreKeeper!!!
+                            </p>
+
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <h1><span id="p1Display">0</span> to <span id="p2Display">0</span></h1>
+                                <p>Use the button below to keep score</p>
+                                <label for="maxPoints" class="label is-large is-inline">Playing to</label>
+
+                                <div class="select is-rounded">
+                                    <select name="maxPoints" id="maxPoints">
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <footer class="card-footer">
+                            <button id="p1Button" class=" is-primary button card-footer-item">+1 Player One</button>
+                            <button id="p2Button" class="is-info button card-footer-item">+1 Player Two</button>
+                            <button id="reset" class="is-danger button card-footer-item">Reset</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        //retracted version of code
+        let max = 1;
+        let winningScore = 3;
+        let reset = document.querySelector('#reset');
+        let maxPoints = document.querySelector('#maxPoints');
+        const p1 = {
+            score: 0,
+            Button: document.querySelector('#p1Button'),
+            Display: document.querySelector('#p1Display')
+        }
+        const p2 = {
+            score: 0,
+            Button: document.querySelector('#p2Button'),
+            Display: document.querySelector('#p2Display')
+        }
+
+        maxPoints.addEventListener('change', (e) => {
+            winningScore = parseInt(maxPoints.value);
+            reload();
+        })
+
+        let isGameOver = false;
+
+        function updateScores(player, opponent) {
+            if (!isGameOver) {
+                player.score = player.score + 1;
+                if (player.score === winningScore) {
+                    isGameOver = true;
+                    player.Display.classList.add('has-text-success');
+                    opponent.Display.classList.add('has-text-danger');
+                    player.Button.disabled = true;
+                    opponent.Button.disabled = true;
+                }
+                player.Display.innerText = player.score;
+            }
+        }
+
+        p1.Button.addEventListener('click', function (e) {
+            updateScores(p1, p2);
+        })
+        p2.Button.addEventListener('click', function (e) {
+            updateScores(p2, p1);
+        })
+        reset.addEventListener('click', reload)
+
+        function reload() {
+            for (let p of [p1, p2]) {
+                p.score = 0;
+                p.Display.innerText = 0;
+                p.Display.classList.remove('has-text-success', 'has-text-danger');
+                p.Button.disabled = false;
+            }
+
+            isGameOver = false;
+
+
+
+        }
+    </script>
+</body>
+
+</html>
